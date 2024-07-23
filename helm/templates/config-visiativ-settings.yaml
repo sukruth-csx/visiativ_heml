@@ -1,0 +1,178 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: visiativ-config
+data:
+  config.properties: |
+    #=========================================================================
+    #                  MASTER VDOC CONFIGURATION FILE
+    #                Copyright(c) Visiativ Software 2001-2014
+    #=========================================================================
+    # Ce fichier est utilisé par l'outil de configuration vdoc qui lance 
+    # la routine nommée "applyvdoc" afin de mettre à jour les fichiers
+    # de configuration du serveur. Sukruth
+    #
+    # ATTENTION !!!
+    # Si vous ne souhaitez pas ou ne pouvez pas utiliser l'outil de configuration
+    # "configvdoc", vous pouvez éditer et mettre à jour manuellement ce fichier
+    # avant d'appliquer la configuration (vous pouvez ensuite lancer manuellement 
+    # la routine "applyconfig" situé dans le dossier d'installation de vdoc)
+    # ... MAIS PRENEZ GARDE : NE SUPPRIMEZ/COMMENTEZ AUCUNE LIGNE DE CE FICHIER !!!!
+    #==========================================================================
+    # English
+    # This file is used by the vdoc configuration tool which use the 
+    # routine named "applyvdoc" in order to update the vdoc server
+    # configuration files
+    #
+    # WARNING !!!
+    # If you don't want or you can't use the configuration tool (configvdoc) :
+    # You can update manually some information in this file
+    # before applying configuration (after you can launch manually the 
+    # "applyconfig" routine located in the vdoc Home directory)
+    # ... BUT BE CAREFUL : NEVER DELETE/COMMENT ANY LINE OF THIS FILE !!!!
+    #==========================================================================
+
+
+    # -----------------------
+    # JBoss Information
+    # -----------------------
+    jboss.http.request.max.post.size = 500
+    jboss.port.http = 8080
+    jboss.port.https = 8443
+    jboss.port.ajp = 8009
+    jboss.port.management.http = 9990
+    jboss.bind.address = 0.0.0.0
+    jboss.bind.address.management = 127.0.0.1
+    jboss.log.format.console = %K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n
+    jboss.log.format.file = %d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n
+
+
+    # -------------------------
+    # Webapp Information
+    # -------------------------
+    vdoc.webapp.name = visiativ
+    vdoc.session.cookie.secure = false
+    vdoc.session.cookie.sameSiteNone = false
+    vdoc.webapp.cors.origins.whitelist =
+    vdoc.webapp.devFeature = false
+    vdoc.webapp.rootRedirectURL =
+    vdoc.webapp.securityLog = false
+    vdoc.webapp.accessLog = false
+    vdoc.webapp.logSimplified = true
+
+    # -------------------------
+    # Database Information
+    # -------------------------
+
+    # Database informations
+    vdoc.database.servertype = mysql
+    vdoc.database.driver = com.mysql.jdbc.Driver
+    vdoc.database.servername = maria-db-service
+    vdoc.database.instancename =
+    vdoc.database.dbname = VisiativProcess
+    vdoc.database.port = 3306
+    vdoc.database.username = root
+    vdoc.database.password =dGVzdA==
+    vdoc.database.useNtlm = false
+    vdoc.database.mysqlConnectordir =
+
+    # -------------------------
+    # History Database Information
+    # -------------------------
+
+    # Database informations
+    vdoc.databasehistory.enablehistory = true
+    vdoc.databasehistory.servertype = mysql
+    vdoc.databasehistory.driver = com.mysql.jdbc.Driver
+    vdoc.databasehistory.servername = maria-db-service
+    vdoc.databasehistory.instancename =
+    vdoc.databasehistory.dbname = VisiativProcessHistory
+    vdoc.databasehistory.port = 3306
+    vdoc.databasehistory.username = root
+    vdoc.databasehistory.password =dGVzdA==
+    vdoc.databasehistory.useNtlm = false
+
+    # -------------------------
+    # Language
+    # -------------------------
+    vdoc.language.default=en
+    vdoc.country.default = FR
+
+    # -------------------------
+    # Skin
+    # -------------------------
+    vdoc.skin.default =workplace
+    vdoc.skin.customizable = true
+
+    # -------------------------
+    # VDoc Portal Information
+    # -------------------------
+    # File storage informations
+    vdoc.default.storagedir =/opt/VisiativProcess/contentstore
+
+    # Proxy informations
+    vdoc.proxy.host =
+    vdoc.proxy.port =
+    vdoc.proxy.username =
+    vdoc.proxy.password =
+    vdoc.proxy.dontproxyhosts =
+
+    # -------------------------
+    # VDoc Report Informations
+    # -------------------------
+    # Database informations
+    vdoc.report.database.servertype = sqlserver.MS
+    vdoc.report.database.driver = com.microsoft.sqlserver.jdbc.SQLServerDriver
+    vdoc.report.database.servername = localhost
+    vdoc.report.database.instancename =
+    vdoc.report.database.dbname = VisiativProcessReport
+    vdoc.report.database.port = 1433
+    vdoc.report.database.username = sa
+    vdoc.report.database.password =
+    vdoc.report.database.useNtlm = false
+
+    # Crystal informations
+    report.crystal.enable = false
+    report.crystal.ras.host =
+    report.crystal.api.url =
+    report.crystal.reports.remote.path =
+    report.crystal.reports.local.path =
+    # BIRT Informations
+    report.birt.enable=false
+    report.birt.api.url=
+    report.birt.reports.remote.path=
+    report.birt.reports.local.path=
+
+    # -----------------------
+    # VDoc Open Informations
+    # -----------------------
+    # Database informations
+    vdoc.open.database.servertype = sqlserver.MS
+    vdoc.open.database.driver = com.microsoft.sqlserver.jdbc.SQLServerDriver
+    vdoc.open.database.servername = localhost
+    vdoc.open.database.instancename =
+    vdoc.open.database.dbname = VDocOpen
+    vdoc.open.database.port = 1433
+    vdoc.open.database.username = sa
+    vdoc.open.database.password =
+    #Access URL
+    vdoc.open.web.servername =
+    vdoc.open.web.internalUrl = false
+
+    # JVM memory configuration
+    vdoc.advanced.jvmconfiguration = 2048
+
+    # -----------------------
+    # MS IIS Informations
+    # -----------------------
+    # Value used by the configuration tool only
+    # NEVER CHANGE MANUALLY THIS VALUE, USE THE CONFIGURATION TOOL
+    vdoc.iis.website =
+    vdoc.iis.website.name =
+    vdoc.iis.website.id =
+    vdoc.iis.website.port =
+    vdoc.iis.website.ip =
+    vdoc.iis.windows.auth = false
+
+    # Other
+

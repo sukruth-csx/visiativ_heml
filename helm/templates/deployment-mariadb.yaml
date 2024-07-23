@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+  labels:
+    app: mariadb
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.mariadb.replicas }}
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - name: mariadb
+          image: {{ .Values.mariadb.repository }}:{{ .Values.mariadb.tag }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.mariadb.MYSQL_ROOT_PASSWORD }}
+            - name: MYSQL_DATABASE
+              value:  {{ .Values.mariadb.MYSQL_VISIATIV_DATABASE_NAME }}
+            - name: MYSQL_USER
+              value: {{ .Values.mariadb.MYSQL_USER }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.mariadb.MYSQL_PASSWORD }}
+          ports:
+          - containerPort: 3306
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqladmin ping --silent"
+            initialDelaySeconds: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqladmin ping --silent"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          volumeMounts:
+          - name: visiativ-database
+            mountPath: /var/lib/mysql
+          - name: config-volume
+            mountPath: /etc/mysql/my.cnf
+            subPath: my.cnf
+          - name: init-script
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: visiativ-database
+        hostPath:
+          path: /usr/share/mariadb/
+      - name: config-volume
+        configMap:
+          name: mariadb-config
+      - name: init-script
+        configMap:
+          name: mariadb-init-scripts

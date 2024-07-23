@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-init-scripts
+data:
+  init-databases.sql: |
+    CREATE DATABASE IF NOT EXISTS {{ .Values.mariadb.MYSQL_VISIATIV_HISTORY_DATABASE_NAME }};
+    CREATE DATABASE IF NOT EXISTS {{ .Values.mariadb.MYSQL_VISIATIV_REPORT_DATABASE_NAME }};

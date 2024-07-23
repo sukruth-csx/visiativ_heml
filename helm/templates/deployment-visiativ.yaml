@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visiativ-deployment
+  namespace: {{ .Values.namespace }}
+  annotations:
+    "helm.sh/depends-on": mariadb-deployment
+spec:
+  replicas: {{ .Values.visiativ.replicas }}
+  selector:
+    matchLabels:
+      app: visiativ
+  template:
+    metadata:
+      labels:
+        app: visiativ
+    spec:
+      containers:
+        - name: visiativ
+          image:  {{ .Values.visiativ.repository }}:{{ .Values.visiativ.tag }}
+          ports:
+            - containerPort: {{ .Values.visiativ.WILDFLY_HTTP_PORT }}
+            - containerPort: {{ .Values.visiativ.WILDFLY_MANAGEMENT_PORT }}
+            - containerPort: {{ .Values.visiativ.JVM_DEBUG_PORT }}
+          volumeMounts:
+          - name: volume-process-data
+            mountPath: /process-data"
+          - name: volume-apps
+            mountPath: /opt/vdocplatform/ori/apps
+          - name: volume-custom
+            mountPath: /opt/vdocplatform/ori/custom
+          - name: config-volume
+            mountPath: /opt/VisiativProcess/config.properties
+            subPath: config.properties
+      volumes:
+      - name: volume-process-data
+        hostPath:
+          path: /usr/share/volumes/process-data
+      - name: volume-apps
+        hostPath:
+          path: /usr/share/volumes/apps
+      - name: volume-custom
+        hostPath:
+          path: /usr/share/volumes/custom
+      - name: config-volume
+        configMap:
+          name: visiativ-config

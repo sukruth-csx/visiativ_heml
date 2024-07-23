@@ -1,0 +1,24 @@
+namespace: hcm-client1
+mariadb:
+  replicas: 1
+  repository: mariadb
+  tag: 10.7
+  MYSQL_ROOT_PASSWORD: test
+  MYSQL_USER: sa
+  MYSQL_PASSWORD: test
+  MYSQL_VISIATIV_DATABASE_NAME: VisiativProcess
+  MYSQL_VISIATIV_HISTORY_DATABASE_NAME: VisiativProcessHistory
+  MYSQL_VISIATIV_REPORT_DATABASE_NAME: VisiativProcessReport
+  DATABASE_SERVICE_NAME: maria-db-service
+
+visiativ:
+  repository: localhost:32000/visiativ
+  tag: latest
+  WILDFLY_HTTP_PORT: 8080
+  WILDFLY_MANAGEMENT_PORT: 9990
+  JVM_DEBUG_PORT: 8000
+  replicas: 1
+
+
+hosts:
+  - hcm.ubuntu.com
